@@ -1,6 +1,8 @@
 require 'bundler/setup'
 Bundler.require
 require 'sinatra/reloader' if development?
+require 'json'
+require 'net/http'
 require 'sinatra/activerecord'
 require './models'
 require 'dotenv/load'
@@ -54,5 +56,17 @@ post '/signup' do
 end
 
 get '/search' do
+    erb :search
+end
+
+post '/search' do
+    uri = URI("https://itunes.apple.com/search")
+    uri.query = URI.encode_www_form({
+        term: params[:keyword],
+        limit: params[:limit]
+    })
+    res = Net::HTTP.get_response(uri)
+    json = JSON.parse(res.body)
+    @musics = json["results"]
     erb :search
 end
