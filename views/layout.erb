@@ -8,9 +8,13 @@
 <body>
 <nav class="center-hrizontal">
 	<a href="/">MUSIC SNS!!!</a>
-	<a href="#"><img src="" alt="user_image" width="40" height="40"></a></li>
-	<a href="#">search</a></li>
-	<a href="#">logout</a>
+	<% if session[:user] %>
+		<a href="#"><img src="<%= User.find(session[:user]).image_url %>" alt="user_image" width="40" height="40"></a></li>
+		<a href="#">Search</a></li>
+		<a href="/signout">Sign out</a>
+	<% else %>
+		<a href="#">Sign up</a>
+	<% end %>
 </nav>
 <main>
 

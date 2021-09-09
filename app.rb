@@ -19,3 +19,8 @@ post '/signin' do
     end
     redirect '/'
 end
+
+get '/signout' do
+    session[:user] = nil
+    redirect '/'
+end
