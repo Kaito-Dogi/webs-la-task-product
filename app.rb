@@ -56,7 +56,11 @@ post '/signup' do
 end
 
 get '/search' do
-    erb :search
+    if session[:user]
+        erb :search
+    else
+        redirect '/'
+    end
 end
 
 post '/search' do
@@ -69,4 +73,25 @@ post '/search' do
     json = JSON.parse(res.body)
     @musics = json["results"]
     erb :search
+end
+
+post '/post' do
+    Post.create(
+        user_id: session[:user],
+        image_url: params[:image_url],
+        artist_name: params[:artist_name],
+        collection_name: params[:collection_name],
+        track_name: params[:track_name],
+        preview_url: params[:preview_url],
+        comment: params[:comment],
+    )
+    redirect '/mypage'
+end
+
+get '/mypage' do
+    if session[:user]
+        erb :mypage
+    else
+        redirect '/'
+    end
 end
