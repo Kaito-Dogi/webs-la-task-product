@@ -28,3 +28,24 @@ end
 get '/signup' do
     erb :signup
 end
+
+post '/signup' do
+    # 画像を保存するパスを指定．
+    image_url = "./user_images/#{params[:file][:filename]}"
+    # 画像の実体を読み込み，保存．
+    File.open("./public/#{image_url}", 'wb') do |f|
+      f.write(params[:file][:tempfile].read)
+    end
+    
+    # 新規ユーザーの登録．
+    user = User.create(
+        name: params[:name],
+        image_url: image_url,
+        password: params[:password],
+        password_confirmation: params[:password_confirmation]
+    )
+    if user.persisted?
+        session[:user] = user.id
+    end
+    redirect '/'
+end
