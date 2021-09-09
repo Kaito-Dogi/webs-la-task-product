@@ -104,3 +104,18 @@ get '/delete/:id' do
     _post.destroy
     redirect '/mypage'
 end
+
+get '/edit/:id' do
+    @post = Post.find(params[:id])
+    unless session[:user] && session[:user] == @post.user.id
+        redirect '/mypage'
+    end
+    erb :edit
+end
+
+post '/update/:id' do
+    _post = Post.find(params[:id])
+    _post.comment = params[:comment]
+    _post.save
+    redirect '/mypage'
+end
