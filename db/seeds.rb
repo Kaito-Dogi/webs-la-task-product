@@ -1,1 +1,1 @@
-User.create(name: "test", image_url: "https://lohas.nicoseiga.jp/thumb/946062i", password: "test")
+User.create(name: "test", image_url: "./user_images/default_icon.png", password: "test")
