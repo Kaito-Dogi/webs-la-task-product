@@ -56,11 +56,10 @@ post '/signup' do
 end
 
 get '/search' do
-    if session[:user]
-        erb :search
-    else
+    unless session[:user]
         redirect '/'
     end
+    erb :search
 end
 
 post '/search' do
@@ -89,9 +88,19 @@ post '/post' do
 end
 
 get '/mypage' do
-    if session[:user]
-        erb :mypage
-    else
+    unless session[:user]
         redirect '/'
     end
+    
+    @user = User.find(session[:user])
+    erb :mypage
+end
+
+get '/delete/:id' do
+    _post = Post.find(params[:id])
+    unless session[:user] && session[:user] == _post.user.id
+        redirect '/mypage'
+    end
+    _post.destroy
+    redirect '/mypage'
 end
