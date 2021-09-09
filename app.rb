@@ -24,3 +24,7 @@ get '/signout' do
     session[:user] = nil
     redirect '/'
 end
+
+get '/signup' do
+    erb :signup
+end
