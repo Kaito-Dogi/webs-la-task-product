@@ -20,10 +20,12 @@
 				<p>artist: <%= _post.artist_name %></p>
 				<p>コメント: <%= _post.comment %></p>
 				<p>投稿者: <%= _post.user.name %><br>
+					<% if false %>
 					<a href="#">フォローする</a>
 					<a href="#">フォロー解除</a><br>
+					<% end %>
 				</p>
-				<p>いいねしたユーザー<br>
+				<p>イイねしたユーザー<br>
 					<% unless _post.favorites.empty? %>
 						<% _post.favorites.each do |favorite| %>
 							<img class="user-icon" src="<%= favorite.user.image_url %>" alt="user_image">
