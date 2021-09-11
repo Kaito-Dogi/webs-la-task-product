@@ -10,6 +10,7 @@ require 'dotenv/load'
 enable :sessions
 
 get '/' do
+    @posts = Post.all
     erb :index
 end
 
