@@ -33,6 +33,7 @@ get '/signup' do
 end
 
 post '/signup' do
+    # 変数を初期化．
     image_url = nil
     if params[:file]
         # 画像を保存するパスを指定．
@@ -57,7 +58,9 @@ post '/signup' do
 end
 
 get '/search' do
+    # ログインしていない場合，
     unless session[:user]
+        # トップページに遷移．
         redirect '/'
     end
     erb :search
@@ -89,7 +92,9 @@ post '/post' do
 end
 
 get '/mypage' do
+    # ログインしていない場合，
     unless session[:user]
+        # トップページに遷移．
         redirect '/'
     end
     
@@ -99,7 +104,11 @@ end
 
 get '/delete/:id' do
     _post = Post.find(params[:id])
+    # ログインしていない
+    # または
+    # sessionに保存されているuserのidが投稿に紐付いているuserのidと異なる場合，
     unless session[:user] && session[:user] == _post.user.id
+        # マイページに遷移．
         redirect '/mypage'
     end
     _post.destroy
@@ -108,7 +117,11 @@ end
 
 get '/edit/:id' do
     @post = Post.find(params[:id])
+    # ログインしていない，
+    # または，
+    # sessionに保存されているuserのidが投稿に紐付いているuserのidと異なる場合，
     unless session[:user] && session[:user] == @post.user.id
+        # マイページに遷移．
         redirect '/mypage'
     end
     erb :edit
@@ -122,12 +135,14 @@ post '/edit/:id' do
 end
 
 get '/favorite/:post_id' do
+    # ログインしていない場合，
     unless session[:user]
+        # 新規登録画面に遷移．
         redirect '/signup'
     end
     
-    # 既にイイねしていないか確認．
     favorite = Favorite.find_by(user_id: session[:user], post_id: params[:post_id])
+    # 既にイイねしていないか確認．
     if favorite.nil?
         Favorite.create(
             user_id: session[:user],
