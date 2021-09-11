@@ -6,7 +6,7 @@
 		<input type="submit" value="検索">
 	</form>
 	<h2>検索結果</h2>
-	<% if @musics %>
+	<% unless @musics.nil? %>
 		<div class="center-hrizontal">
 			<% @musics.each do |music| %>
 				<div class="post center-vertical">

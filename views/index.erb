@@ -13,7 +13,7 @@
 
 <section class="center-vertical">
 	<h1>最新の投稿</h1>
-	<% if @posts %>
+	<% unless @posts.empty? %>
 		<% @posts.each do |_post| %>
 			<div class="post center-vertical">
 				<img src="<%= _post.image_url %>" width="125" height="125">

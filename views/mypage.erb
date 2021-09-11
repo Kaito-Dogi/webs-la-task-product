@@ -1,6 +1,6 @@
 <section class="center-vertical">
 	<h1><%= @user.name %>の投稿</h1>
-	<% if @user.posts %>
+	<% unless @user.posts.empty? %>
 		<% @user.posts.each do |_post| %>
 			<div class="center-hrizontal">
 				<div class="post center-vertical">
