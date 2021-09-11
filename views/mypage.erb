@@ -20,18 +20,33 @@
 	<% end %>
 </section>
 
-<% if false %>
 <section class="center-vertical">
-	<h1>〇〇のイイねした投稿</h1>
-	<p>イイねがありません</p>
+	<h1><%= @user.name %>のイイねした投稿</h1>
+	<% unless @user.favorites.empty? %>
+		<% @user.favorites.each do |favorite| %>
+			<div class="center-hrizontal">
+				<div class="post center-vertical">
+					<img src="<%= favorite.post.image_url %>">
+					<p><%= favorite.post.artist_name %></p>
+					<p><%= favorite.post.collection_name %></p>
+					<p><%= favorite.post.track_name %></p>
+					<a href="<%= favorite.post.preview_url %>">サンプル</a>
+					<p>コメント：<%= favorite.post.comment %></p>
+				</div>
+			</div>
+		<% end %>
+	<% else %>
+		<p>イイねがありません</p>
+	<% end %>
 </section>
 
+<% if false %>
 <section class="center-vertical">
-	<h1>〇〇 のフォロー</h1>
+	<h1><%= @user.name %>のフォロー</h1>
 	<a href="#">フォロー解除</a><br>
 </section>
 
 <section class="center-vertical">
-	<h1>〇〇のフォロワー</h1>
+	<h1><%= @user.name %>のフォロワー</h1>
 </section>
 <% end %>

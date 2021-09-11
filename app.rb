@@ -120,3 +120,19 @@ post '/edit/:id' do
     _post.save
     redirect '/mypage'
 end
+
+get '/favorite/:post_id' do
+    unless session[:user]
+        redirect '/'
+    end
+    
+    # 既に保存されていないか確認．
+    if Favorite.find_by(post_id: params[:post_id]).nil?
+        Favorite.create(
+            user_id: session[:user],
+            post_id: params[:post_id]
+        )
+    end
+    
+    redirect '/'
+end

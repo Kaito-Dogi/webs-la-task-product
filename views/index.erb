@@ -24,9 +24,9 @@
 					<a href="#">フォロー解除</a><br>
 				</p>
 				<p>いいねしたユーザー<br>
-					<img class="user-icon" src="<%= _post.user.image_url %>" alt="user_image">
+					<img class="user-icon" src="" alt="user_image">
 				</p>
-				<a href="#">いいねする</a>
+				<a href="/favorite/<%= _post.id %>">いいねする</a>
 			</div>
 		<% end %>
 	<% else %>
