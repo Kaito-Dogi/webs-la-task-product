@@ -30,7 +30,11 @@
 						<% end %>
 					<% end %>
 				</p>
-				<a href="/favorite/<%= _post.id %>">いいねする</a>
+				<% if Favorite.find_by(user_id: session[:user], post_id: _post.id).nil? %>
+					<a href="/favorite/<%= _post.id %>">イイねする</a>
+				<% else %>
+					<a href="/favorite/<%= _post.id %>">イイねを外す</a>
+				<% end %>
 			</div>
 		<% end %>
 	<% else %>
