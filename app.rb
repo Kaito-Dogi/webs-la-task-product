@@ -123,7 +123,7 @@ end
 
 get '/favorite/:post_id' do
     unless session[:user]
-        redirect '/'
+        redirect '/signup'
     end
     
     # 既にイイねしていないか確認．
