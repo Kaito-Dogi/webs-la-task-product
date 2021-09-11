@@ -1,1 +1,1 @@
-User.create(name: "test", image_url: "./user_images/default_icon.png", password: "test")
+User.create(name: "test", image_url: "./upload/default_icon.png", password: "test")

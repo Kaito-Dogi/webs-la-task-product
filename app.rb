@@ -35,7 +35,7 @@ post '/signup' do
     image_url = nil
     if params[:file]
         # 画像を保存するパスを指定．
-        image_url = "./user_images/#{params[:file][:filename]}"
+        image_url = "./upload/#{params[:file][:filename]}"
         # 画像の実体を読み込み，保存．
         File.open("./public/#{image_url}", 'wb') do |f|
           f.write(params[:file][:tempfile].read)
@@ -113,7 +113,7 @@ get '/edit/:id' do
     erb :edit
 end
 
-post '/update/:id' do
+post '/edit/:id' do
     _post = Post.find(params[:id])
     _post.comment = params[:comment]
     _post.save
