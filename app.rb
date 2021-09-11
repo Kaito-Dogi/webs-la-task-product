@@ -17,14 +17,14 @@ end
 post '/signin' do
     user = User.find_by(name: params[:name])
     if user && user.authenticate(params[:password])
-        session[:user] = user.id
+        session[:user_id] = user.id
         puts session.to_hash
     end
     redirect '/search'
 end
 
 get '/signout' do
-    session[:user] = nil
+    session[:user_id] = nil
     redirect '/'
 end
 
@@ -52,14 +52,14 @@ post '/signup' do
         password_confirmation: params[:password_confirmation]
     )
     if user.persisted?
-        session[:user] = user.id
+        session[:user_id] = user.id
     end
     redirect '/search'
 end
 
 get '/search' do
     # ログインしていない場合，
-    unless session[:user]
+    unless session[:user_id]
         # トップページに遷移．
         redirect '/'
     end
@@ -80,7 +80,7 @@ end
 
 post '/post' do
     Post.create(
-        user_id: session[:user],
+        user_id: session[:user_id],
         image_url: params[:image_url],
         artist_name: params[:artist_name],
         collection_name: params[:collection_name],
@@ -93,21 +93,21 @@ end
 
 get '/mypage' do
     # ログインしていない場合，
-    unless session[:user]
+    unless session[:user_id]
         # トップページに遷移．
         redirect '/'
     end
     
-    @user = User.find(session[:user])
+    @user = User.find(session[:user_id])
     erb :mypage
 end
 
 get '/delete/:id' do
     _post = Post.find(params[:id])
-    # ログインしていない
-    # または
+    # ログインしていない，
+    # または，
     # sessionに保存されているuserのidが投稿に紐付いているuserのidと異なる場合，
-    unless session[:user] && session[:user] == _post.user.id
+    unless session[:user_id] && session[:user_id] == _post.user.id
         # マイページに遷移．
         redirect '/mypage'
     end
@@ -120,7 +120,7 @@ get '/edit/:id' do
     # ログインしていない，
     # または，
     # sessionに保存されているuserのidが投稿に紐付いているuserのidと異なる場合，
-    unless session[:user] && session[:user] == @post.user.id
+    unless session[:user_id] && session[:user_id] == @post.user.id
         # マイページに遷移．
         redirect '/mypage'
     end
@@ -136,16 +136,16 @@ end
 
 get '/favorite/:post_id' do
     # ログインしていない場合，
-    unless session[:user]
+    unless session[:user_id]
         # 新規登録画面に遷移．
         redirect '/signup'
     end
     
-    favorite = Favorite.find_by(user_id: session[:user], post_id: params[:post_id])
+    favorite = Favorite.find_by(user_id: session[:user_id], post_id: params[:post_id])
     # 既にイイねしていないか確認．
     if favorite.nil?
         Favorite.create(
-            user_id: session[:user],
+            user_id: session[:user_id],
             post_id: params[:post_id]
         )
     else

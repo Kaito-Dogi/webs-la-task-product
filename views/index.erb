@@ -1,6 +1,6 @@
 <section class="first-view center-vertical">
 	<h1>MUSIC SNS!!!</h1>
-	<% unless session[:user] %>
+	<% unless session[:user_id] %>
 		<div class="signin-container">
 			<form action="/signin" method="post">
 				<input type="text" name="name" placeholder="ユーザー名">
@@ -32,7 +32,7 @@
 						<% end %>
 					<% end %>
 				</p>
-				<% if Favorite.find_by(user_id: session[:user], post_id: _post.id).nil? %>
+				<% if Favorite.find_by(user_id: session[:user_id], post_id: _post.id).nil? %>
 					<a href="/favorite/<%= _post.id %>">イイねする</a>
 				<% else %>
 					<a href="/favorite/<%= _post.id %>">イイねを外す</a>

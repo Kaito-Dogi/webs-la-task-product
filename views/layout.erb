@@ -8,9 +8,9 @@
 <body>
 <nav class="center-hrizontal">
 	<a href="/">MUSIC SNS!!!</a>
-	<% if session[:user] %>
+	<% if session[:user_id] %>
 		<a href="/mypage">
-			<img class="user-icon" src="<%= User.find(session[:user]).image_url || User.find(1).image_url %>" alt="user_image">
+			<img class="user-icon" src="<%= User.find(session[:user_id]).image_url || User.find(1).image_url %>" alt="user_image">
 		</a>
 		<a href="/search">Search</a>
 		<a href="/signout">Sign out</a>
